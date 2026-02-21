@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.DS_Store
+PROJECT_STRUCTURE.md
+SETUP.md

@@ -1,6 +1,6 @@
 {
   "name": "@periodic/strontium",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Production-grade, reliability-first HTTP client with resilience primitives for Node.js with TypeScript support",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

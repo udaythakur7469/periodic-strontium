@@ -9,8 +9,9 @@ async function sha256(data: string): Promise<string> {
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
   }
-  // Node.js fallback
-  const { createHash } = await import('crypto');
+  // Node.js fallback using require
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { createHash } = require('crypto') as typeof import('crypto');
   return createHash('sha256').update(data).digest('hex');
 }
 

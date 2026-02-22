@@ -1,12 +1,18 @@
 export class StrontiumError extends Error {
-  constructor(message: string, public readonly code: string) {
+  constructor(
+    message: string,
+    public readonly code: string,
+  ) {
     super(message);
     this.name = 'StrontiumError';
   }
 }
 
 export class NetworkError extends StrontiumError {
-  constructor(message: string, public readonly cause?: unknown) {
+  constructor(
+    message: string,
+    public readonly cause?: unknown,
+  ) {
     super(message, 'NETWORK_ERROR');
     this.name = 'NetworkError';
   }
@@ -20,7 +26,10 @@ export class TimeoutError extends StrontiumError {
 }
 
 export class RetryExhaustedError extends StrontiumError {
-  constructor(public readonly attempts: number, public readonly lastError: unknown) {
+  constructor(
+    public readonly attempts: number,
+    public readonly lastError: unknown,
+  ) {
     super(`Retry exhausted after ${attempts} attempts`, 'RETRY_EXHAUSTED');
     this.name = 'RetryExhaustedError';
   }
@@ -34,7 +43,10 @@ export class CircuitOpenError extends StrontiumError {
 }
 
 export class ResponseValidationError extends StrontiumError {
-  constructor(message: string, public readonly validationErrors?: unknown) {
+  constructor(
+    message: string,
+    public readonly validationErrors?: unknown,
+  ) {
     super(message, 'RESPONSE_VALIDATION_ERROR');
     this.name = 'ResponseValidationError';
   }

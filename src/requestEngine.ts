@@ -95,7 +95,16 @@ export class StrontiumClient {
       return promise;
     }
 
-    return this._executeWithRetry<T>(requestId, method, fullUrl, body, headers, schema, effectiveTimeout, options);
+    return this._executeWithRetry<T>(
+      requestId,
+      method,
+      fullUrl,
+      body,
+      headers,
+      schema,
+      effectiveTimeout,
+      options,
+    );
   }
 
   private async _executeWithRetry<T>(
@@ -164,16 +173,13 @@ export class StrontiumClient {
       let statusCode: number | null = null;
 
       try {
-        response = await withTimeout(
-          fetch(url, {
-            method,
-            headers: requestHeaders,
-            ...(hasBody ? { body: JSON.stringify(body) } : {}),
-            signal: controller.signal,
-          }),
-          timeoutMs,
-          controller,
-        );
+        const fetchRequest = new Request(url, {
+          method,
+          headers: requestHeaders,
+          ...(hasBody ? { body: JSON.stringify(body) } : {}),
+          signal: controller.signal,
+        });
+        response = await withTimeout(this.config.transport(fetchRequest), timeoutMs, controller);
 
         statusCode = response.status;
         const latencyMs = Date.now() - startTime;

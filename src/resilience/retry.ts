@@ -10,7 +10,13 @@ export const DEFAULT_RETRY_CONFIG: RetryConfig = {
   retryOn: ['network', '5xx'],
 };
 
-function computeDelay(strategy: RetryStrategy, attempt: number, baseDelayMs: number, maxDelayMs: number, jitter: boolean): number {
+function computeDelay(
+  strategy: RetryStrategy,
+  attempt: number,
+  baseDelayMs: number,
+  maxDelayMs: number,
+  jitter: boolean,
+): number {
   let delay: number;
   if (typeof strategy === 'function') {
     delay = strategy(attempt, baseDelayMs);
@@ -30,7 +36,12 @@ function computeDelay(strategy: RetryStrategy, attempt: number, baseDelayMs: num
   return Math.floor(delay);
 }
 
-export function shouldRetry(config: RetryConfig, _error: unknown, statusCode: number | null, attempt: number): boolean {
+export function shouldRetry(
+  config: RetryConfig,
+  _error: unknown,
+  statusCode: number | null,
+  attempt: number,
+): boolean {
   if (!config.enabled) return false;
   if (attempt >= config.maxAttempts) return false;
 
@@ -44,6 +55,12 @@ export function shouldRetry(config: RetryConfig, _error: unknown, statusCode: nu
 }
 
 export async function backoff(config: RetryConfig, attempt: number): Promise<void> {
-  const delay = computeDelay(config.strategy, attempt, config.baseDelayMs, config.maxDelayMs, config.jitter);
+  const delay = computeDelay(
+    config.strategy,
+    attempt,
+    config.baseDelayMs,
+    config.maxDelayMs,
+    config.jitter,
+  );
   await new Promise((resolve) => setTimeout(resolve, delay));
 }

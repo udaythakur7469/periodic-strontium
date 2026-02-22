@@ -1,6 +1,10 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
-export type RetryStrategy = 'fixed' | 'exponential' | 'linear' | ((attempt: number, baseDelayMs: number) => number);
+export type RetryStrategy =
+  | 'fixed'
+  | 'exponential'
+  | 'linear'
+  | ((attempt: number, baseDelayMs: number) => number);
 
 export interface RetryConfig {
   enabled: boolean;
@@ -77,7 +81,10 @@ export interface HookContext {
 
 export interface Hooks {
   onBeforeRequest?: (ctx: HookContext) => void | Promise<void>;
-  onAfterResponse?: (ctx: HookContext, response: StrontiumResponse<unknown>) => void | Promise<void>;
+  onAfterResponse?: (
+    ctx: HookContext,
+    response: StrontiumResponse<unknown>,
+  ) => void | Promise<void>;
   onRetry?: (ctx: HookContext, error: unknown) => void | Promise<void>;
   onCircuitOpen?: (ctx: HookContext) => void | Promise<void>;
   onError?: (ctx: HookContext, error: unknown) => void | Promise<void>;

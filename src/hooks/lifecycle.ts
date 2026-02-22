@@ -17,7 +17,8 @@ export type { Hooks, HookContext };
 export function createHookRunner(hooks: Hooks) {
   return {
     beforeRequest: (ctx: HookContext) => runHook(hooks.onBeforeRequest, ctx),
-    afterResponse: (ctx: HookContext, res: StrontiumResponse<unknown>) => runHook(hooks.onAfterResponse, ctx, res),
+    afterResponse: (ctx: HookContext, res: StrontiumResponse<unknown>) =>
+      runHook(hooks.onAfterResponse, ctx, res),
     onRetry: (ctx: HookContext, err: unknown) => runHook(hooks.onRetry, ctx, err),
     onCircuitOpen: (ctx: HookContext) => runHook(hooks.onCircuitOpen, ctx),
     onError: (ctx: HookContext, err: unknown) => runHook(hooks.onError, ctx, err),

@@ -42,7 +42,10 @@ export function startSpan(tracer: OTelTracer | undefined, name: string): OTelSpa
   }
 }
 
-export function endSpan(span: OTelSpan | undefined, attrs: Record<string, string | number | boolean>): void {
+export function endSpan(
+  span: OTelSpan | undefined,
+  attrs: Record<string, string | number | boolean>,
+): void {
   if (!span) return;
   try {
     for (const [k, v] of Object.entries(attrs)) {

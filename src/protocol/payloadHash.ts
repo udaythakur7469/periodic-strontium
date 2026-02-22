@@ -26,7 +26,7 @@ export async function enforceIntegrity(idempotencyKey: string, body: unknown): P
   const existing = idempotencyKeyHashes.get(idempotencyKey);
   if (existing !== undefined && existing !== hash) {
     throw new IntegrityViolationError(
-      `Idempotency key "${idempotencyKey}" was already used with a different payload.`
+      `Idempotency key "${idempotencyKey}" was already used with a different payload.`,
     );
   }
   idempotencyKeyHashes.set(idempotencyKey, hash);

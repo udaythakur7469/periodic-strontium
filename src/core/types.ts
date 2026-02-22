@@ -62,7 +62,7 @@ export interface Validator<T> {
   parse(data: unknown): T;
 }
 
-export type Transport = (request: Request) => Promise<Response>;
+export type Transport = (url: string, init: RequestInit) => Promise<Response>;
 
 export type CircuitState = 'CLOSED' | 'OPEN' | 'HALF_OPEN';
 

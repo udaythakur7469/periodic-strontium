@@ -173,13 +173,16 @@ export class StrontiumClient {
       let statusCode: number | null = null;
 
       try {
-        const fetchRequest = new Request(url, {
-          method,
-          headers: requestHeaders,
-          ...(hasBody ? { body: JSON.stringify(body) } : {}),
-          signal: controller.signal,
-        });
-        response = await withTimeout(this.config.transport(fetchRequest), timeoutMs, controller);
+        response = await withTimeout(
+          this.config.transport(url, {
+            method,
+            headers: requestHeaders,
+            ...(hasBody ? { body: JSON.stringify(body) } : {}),
+            signal: controller.signal,
+          }),
+          timeoutMs,
+          controller,
+        );
 
         statusCode = response.status;
         const latencyMs = Date.now() - startTime;
